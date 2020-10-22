@@ -10,8 +10,8 @@ biosprint:
 	push ax
 	push bx
 	
-	mov ah, 0x0e;selects teletype subfunction
-	mov bx, [bp+4];fetch argument
+	mov ah, 0x0e	;selects teletype subfunction
+	mov bx, [bp+4]	;fetch argument
 
 	.loop:
 		cmp [bx], byte 0
@@ -28,3 +28,4 @@ biosprint:
 	pop bp;restore base pointer
 	
 	ret 2;two bytes need unwinding
+	

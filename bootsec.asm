@@ -1,8 +1,8 @@
-org 0x7c00;bootsector gets copied to this address by the BIOS
+[org 0x7c00];bootsector gets copied to this address by the BIOS
 
-mov bp, 0x7bff; set base pointer
-mov sp, bp;set stack pointer
-;Stack should have a clear run until 0x0500. Milage may vary across systems.
+mov bp, 0x7bff	;set base pointer
+mov sp, bp		;set stack pointer
+;Stack should have a clear run until 0x0500.
 
 mov [BOOT_DISC], dl;remember what disc we booted from
 
@@ -15,7 +15,6 @@ add al, '0'
 int 0x10
 
 call biosload
-
 jmp STAGE_ONE_TARGET
 
 message: 
