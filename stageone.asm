@@ -12,8 +12,14 @@ push sucess
 call biosprint
 
 ;Start protected mode
+
+;mask interupts
 cli
+
+;load gdt
 lgdt [gdt_desc]
+
+;flip the switch
 mov eax, cr0 
 or al, 1
 mov cr0, eax

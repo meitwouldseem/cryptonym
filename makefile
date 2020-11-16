@@ -9,3 +9,6 @@ bootsec.bin:
 
 stageone.bin:
 	$(ASM) stageone.asm $(ASMFLAGS) -o stageone.bin
+
+clean:
+	rm -f bootloader.flp bootsec.bin stageone.bin

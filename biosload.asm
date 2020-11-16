@@ -5,10 +5,16 @@
 STAGE_ONE_TARGET equ 0x7e00;Target location to load stage 1 payload
 
 biosload:
+	;start by reseting the flopy drive
+	.reset:
+	mov ah, 0
+	mov dl, [BOOT_DISC]	;Use disc that we booted from
+	int 0x13
+	jc .reset;try again if it fails
+
 	mov ah, 0x02		;select read sector subfunction
 	mov al, 0x04		;read 4 sectors from the start
 	mov dh, 0x00		;read head 0
-	mov dl, [BOOT_DISC]	;read from the disc that we booted from
 	mov ch, 0x00		;read cylinder 0
 	mov cl, 0x02		;start from sector 2. no not sector 1. Sectors arn't counted from 0 for some godforsaken reason.
 	
