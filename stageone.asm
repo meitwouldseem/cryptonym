@@ -1,6 +1,9 @@
-[org 0x7e00]
+;[org 0x7e00]
 ;This is the area right after the bootsector.
+[bits 16]
 
+global _start:function (end - _start)
+_start:
 ;newline
 mov ah, 0x0e
 mov al, 13
@@ -26,14 +29,15 @@ mov cr0, eax
 
 ;We need to do a far jump here to flush the
 ;processor pipeline after switching to 32 bit
+
 jmp CODE_SEG:long_mode_start
 
 sucess:
 	db "Stage 1 bootloader launched",0
 
-%include "biosprint.asm"
-%include "gdt.asm"
-
+%include "biosprint.asmh"
+%include "gdt.asmh"
+end:
 [bits 32]
 
 long_mode_start:
@@ -47,26 +51,32 @@ mov es, ax
 mov fs, ax
 mov gs, ax
 
-mov ebx, 0xb8000
-clear:
-	mov [ebx], byte '!'
-	inc ebx
-	mov [ebx], byte 0x2a
-	inc ebx
-	cmp ebx, 0xb8fa0
-	jne clear
+mov [0xb8000], byte '!'
 
-;mov [0xb8000], byte 'H'
-;mov [0xb8002], byte 'e'
-;mov [0xb8004], byte 'l'
-;mov [0xb8006], byte 'l'
-;mov [0xb8008], byte 'o'
-;mov [0xb800a], byte ' '
-;mov [0xb800c], byte 'W'
-;mov [0xb800e], byte 'o'
-;mov [0xb8010], byte 'r'
-;mov [0xb8012], byte 'l'
-;mov [0xb8014], byte 'd'
+[extern kernel_main]
+
+call kernel_main
+
+;mov ebx, 0xb8000
+;clear:
+;	mov [ebx], byte '!'
+;	inc ebx
+;	mov [ebx], byte 0x2a
+;	inc ebx
+;	cmp ebx, 0xb8fa0
+;	jne clear
+
+; mov [0xb8000], byte 'H'
+; mov [0xb8002], byte 'e'
+; mov [0xb8004], byte 'l'
+; mov [0xb8006], byte 'l'
+; mov [0xb8008], byte 'o'
+; mov [0xb800a], byte ' '
+; mov [0xb800c], byte 'W'
+; mov [0xb800e], byte 'o'
+; mov [0xb8010], byte 'r'
+; mov [0xb8012], byte 'l'
+; mov [0xb8014], byte 'd'
 
 jmp $
 
