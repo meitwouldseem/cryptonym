@@ -1,1 +1,1 @@
-qemu-system-x86_64.exe -s -S -fda bootloader.flp
+qemu-system-i386.exe -s -S -fda bootloader.flp

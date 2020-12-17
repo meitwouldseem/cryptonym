@@ -10,7 +10,7 @@ CC=i686-elf-gcc
 LD=i686-elf-ld
 CFLAGS=-std=gnu99 -ffreestanding -O2 -Wall -Wextra
 LINKFLAGS=-ffreestanding -O2 -nostdlib -lgcc
-ASMFLAGS=-f elf
+ASMFLAGS=-f elf -F dwarf -g
 
 .PHONY: all clean
 
@@ -19,18 +19,14 @@ all: bootloader.flp
 bootloader.flp: bootloader.o
 	objcopy -O binary bootloader.o bootloader.flp
 
-bootsec.o:
-	$(ASM) bootsec.asm $(ASMFLAGS) -o bootsec.o
-
-bootloader.o: stageone.o kernel.o bootsec.o
-	$(CC) -T linker.ld -o bootloader.o $(LINKFLAGS) stageone.o kernel.o bootsec.o
-
-stageone.o:
-	$(ASM) stageone.asm $(ASMFLAGS) -o stageone.o
-
-kernel.o:
-	$(CC) -c kernel.c -o kernel.o $(CFLAGS)
-
+bootloader.o: $(C_OBJS) $(ASM_OBJS)
+	$(CC) -T linker.ld -o bootloader.o $(LINKFLAGS) $(C_OBJS) $(ASM_OBJS)
+#stageone.o kernel.o bootsec.o
 clean:
-	rm -f bootloader.flp bootsec.o stageone.bin stageone.o kernel.o bootloader.o
+	rm -f $(wildcard *.o) $(wildcard *.flp)
 
+%.o: %.c
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+%.o: %.asm
+	$(ASM) $< $(ASMFLAGS) -o $@

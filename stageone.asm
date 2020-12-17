@@ -2,8 +2,8 @@
 ;This is the area right after the bootsector.
 [bits 16]
 
-global _start:function (end - _start)
-_start:
+global stageone
+stageone:
 ;newline
 mov ah, 0x0e
 mov al, 13
@@ -37,7 +37,6 @@ sucess:
 
 %include "biosprint.asmh"
 %include "gdt.asmh"
-end:
 [bits 32]
 
 long_mode_start:
@@ -50,8 +49,6 @@ mov ss, ax
 mov es, ax
 mov fs, ax
 mov gs, ax
-
-mov [0xb8000], byte '!'
 
 [extern kernel_main]
 

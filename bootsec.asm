@@ -19,7 +19,10 @@ add al, '0';fun little trick to convert integer to ascii representation
 int 0x10
 
 call biosload
-jmp STAGE_ONE_TARGET
+
+extern stageone
+
+jmp stageone
 
 message: 
 	db "Loaded from disk: ",0
