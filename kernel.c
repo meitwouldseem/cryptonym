@@ -32,8 +32,7 @@ inline uint16_t vga_character(unsigned char c, uint8_t color)
 	return (uint16_t) c | (uint16_t) color << 8;
 }
 
-size_t cursor_x;
-size_t cursor_y;
+size_t cursor;
 uint8_t default_colour; 
 
 uint16_t* screen_buffer;
@@ -41,8 +40,7 @@ uint16_t* screen_buffer;
 void term_setup()
 {
 	screen_buffer = (uint16_t*) 0xB8000;
-	cursor_x = 0;
-	cursor_y = 0;
+	cursor = 0;
 	default_colour = vga_color(VGA_WHITE, VGA_BLACK);
 }
 
@@ -51,8 +49,21 @@ void term_clear()
 	const size_t limit = DISP_WIDTH * DISP_HEIGHT;
 	for (size_t i=0; i<limit; i++)
 	{
-		screen_buffer[i] = vga_character('!', default_colour);
+		screen_buffer[i] = vga_character(' ', default_colour);
 	}
+	cursor = 0;
+}
+
+void term_putc(const char c)
+{
+	screen_buffer[cursor] = vga_character(c, default_colour);
+	cursor++;
+}
+
+void term_print(const char* str)
+{
+	for (size_t i=0; str[i+1]; i++)
+		term_putc(str[i]);
 }
 
 extern void kernel_main(void)
@@ -61,6 +72,7 @@ extern void kernel_main(void)
 
 	term_clear();
 
+	term_print("Look up at the stars...\n");
 	//*(uint8_t*) 0xB8002 = '!';
 	//for (int i=0; i<10; i++)
 	//{
