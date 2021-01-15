@@ -15,16 +15,16 @@ gdt_code:
 	dw 0xffff		;limit	(0-15)
 	dw 0x0000		;base	(0-15)
 	db 0x00			;base	(16-23)
-	db 10011010b	;Access Flags
-	db 11001111b	;Flags + limit (16:19)
+	db 10011010b		;Access Flags
+	db 11001111b		;Flags + limit (16:19)
 	db 0x00			;base	(24-31)
 
 gdt_data:
 	dw 0xffff		;limit	(0-15)
 	dw 0x0000		;base	(0-15)
 	db 0x00			;base	(16-23)
-	db 10010010b	;Access Flags
-	db 11001111b	;Flags + limit (16:19)
+	db 10010010b		;Access Flags
+	db 11001111b		;Flags + limit (16:19)
 	db 0x00			;base	(24-31)
 
 gdt_end:
