@@ -13,7 +13,7 @@ CFLAGS=-std=gnu99 -ffreestanding -O2 -Wall -Wextra
 LINKFLAGS=-ffreestanding -O2 -nostdlib -lgcc
 ASMFLAGS=-f elf -F dwarf -g
 
-.PHONY: all clean run
+.PHONY: all clean run debug
 
 all: bootloader.flp
 
@@ -34,3 +34,6 @@ clean:
 
 run:
 	$(QEMU) -fda bootloader.flp
+
+debug:
+	$(QEMU) -s -S -fda bootloader.flp

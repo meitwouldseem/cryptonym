@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stddef.h>
+#include "gdt.h"
 
 static const size_t DISP_WIDTH = 80;
 static const size_t DISP_HEIGHT = 25;
@@ -93,7 +94,11 @@ extern void kernel_main(void)
 	term_print(__DATE__, highlight_colour);
 	term_putc(' ', default_colour);
 	term_print(__TIME__, highlight_colour);
-	term_print("\nEvery\nword\non\na\nnew\nline", default_colour);
+	term_print("\nEvery\nword\non\na\nnew\nline\n", default_colour);
+
+	install_gdt_simple_flat();
+
+	term_print("If you are reading this then the GDT is installed!", default_colour);
 	
 loop:
 goto loop;

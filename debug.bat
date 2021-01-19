@@ -1,1 +1,0 @@
-qemu-system-i386.exe -s -S -fda bootloader.flp
