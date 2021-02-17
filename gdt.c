@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include "x86utils.h"
 #include "gdt.h"
+#include "kernelglobals.h"
 
 struct gdt_entry
 {
@@ -33,6 +34,7 @@ struct gdt_entry make_gdt_entry(uint32_t base, uint16_t limit_lo, uint8_t access
 	return entry;
 }
 
+//modifies kernel globals
 void install_gdt_simple_flat()
 {
 	gdt[0] = make_gdt_entry(0, 0, 0, 0);//Null desc
@@ -47,6 +49,9 @@ void install_gdt_simple_flat()
 
 	flush_code_seg(code_seg);
 	flush_data_seg(data_seg);
+
+	kg_code_seg = code_seg;
+	kg_data_seg = data_seg;
 
 	return;
 }

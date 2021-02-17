@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "gdt.h"
+#include "kernelglobals.h"
 
 static const size_t DISP_WIDTH = 80;
 static const size_t DISP_HEIGHT = 25;
@@ -25,6 +26,7 @@ enum vga_colour_val {
 };
 
 size_t cursor;
+uint8_t success_colour;
 uint8_t default_colour;
 uint8_t highlight_colour;
 uint8_t warn_colour;
@@ -50,6 +52,7 @@ void term_setup()
 {
 	screen_buffer = (uint16_t*) 0xB8000;
 	cursor = 0;
+	success_colour = vga_colour(VGA_GREEN, VGA_BLACK);
 	default_colour = vga_colour(VGA_WHITE, VGA_BLACK);
 	highlight_colour = vga_colour(VGA_YELLOW, VGA_BLACK);
 	warn_colour = vga_colour(VGA_WHITE, VGA_RED);
@@ -84,6 +87,25 @@ void term_print(const char* str, uint8_t colour)
 		term_putc(str[i], colour);
 }
 
+void term_print_hex(int i, uint8_t colour)
+{
+	//this function uses recursive calling in order to print digits in the correct order
+	if (i == 0x0)
+		return;
+
+	char c;
+	c = i & 0xF;//mask one hex digit
+
+	if (c > 9)
+		c += 55;//shift c to ascii values representing capitol letters
+	else
+		c += 48;//otherwise shift c to ascii values representing integers
+
+	term_print_hex(i >> 4, colour);
+
+	term_putc(c, colour);
+}
+
 extern void kernel_main(void)
 {
 	term_setup();
@@ -94,11 +116,18 @@ extern void kernel_main(void)
 	term_print(__DATE__, highlight_colour);
 	term_putc(' ', default_colour);
 	term_print(__TIME__, highlight_colour);
-	term_print("\nEvery\nword\non\na\nnew\nline\n", default_colour);
+
+	term_print("\nInstalling GDT: ", default_colour);
 
 	install_gdt_simple_flat();
 
-	term_print("If you are reading this then the GDT is installed!", default_colour);
+	term_print("Done!", success_colour);
+
+	term_print("\ncode seg: ", default_colour);
+	term_print_hex(kg_code_seg, highlight_colour);
+	
+	term_print("\ndata seg: ", default_colour);
+	term_print_hex(kg_data_seg, highlight_colour);
 	
 loop:
 goto loop;
