@@ -22,7 +22,7 @@ bootloader.flp: bootloader.o
 
 bootloader.o: $(C_OBJS) $(ASM_OBJS)
 	$(CC) -T linker.ld -o bootloader.o $(LINKFLAGS) $(C_OBJS) $(ASM_OBJS)
-#stageone.o kernel.o bootsec.o
+
 clean:
 	rm -f $(wildcard *.o) $(wildcard *.flp)
 

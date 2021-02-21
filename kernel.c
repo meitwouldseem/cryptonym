@@ -2,6 +2,9 @@
 #include <stddef.h>
 #include "gdt.h"
 #include "kernelglobals.h"
+#include "idt.h"
+
+#include "x86utils.h"
 
 static const size_t DISP_WIDTH = 80;
 static const size_t DISP_HEIGHT = 25;
@@ -128,7 +131,17 @@ extern void kernel_main(void)
 	
 	term_print("\ndata seg: ", default_colour);
 	term_print_hex(kg_data_seg, highlight_colour);
-	
+
+	term_print("\nInstalling IDT: ", default_colour);
+
+	install_idt();
+
+	term_print("Done!", success_colour);
+
+	test_int();
+
+	halt_sys();
+
 loop:
 goto loop;
 	return;

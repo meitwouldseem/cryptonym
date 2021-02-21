@@ -4,12 +4,20 @@ gdt_descriptor:
 	dw 0x0000
 	dd 0x00000000
 
+idt_descriptor:
+	dw 0x0000
+	dd 0x00000000
+
 jump_target:
 	dw 0
 
 global set_gdt
+global set_idt
 global flush_code_seg
 global flush_data_seg
+
+global test_int
+global halt_sys
 
 set_gdt:
 	;push ebp
@@ -56,3 +64,24 @@ flush_data_seg:
 	mov ss, ax
 	;pop ebp
 	ret
+
+set_idt:
+	mov eax, [esp + 4];idt offset
+	mov [idt_descriptor + 2], eax
+
+	mov ax, [esp + 8];idt size
+	mov [idt_descriptor], ax
+
+	lidt [idt_descriptor]
+
+	sti
+
+	ret
+
+test_int:
+	int 0
+	ret
+
+halt_sys:
+	cli
+	hlt

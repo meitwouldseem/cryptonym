@@ -13,7 +13,7 @@ biosload:
 	jc .reset;try again if it fails
 
 	mov ah, 0x02		;select read sector subfunction
-	mov al, 0x04		;read 4 sectors from the start
+	mov al, 0x16		;read 16 sectors from the start
 	mov dh, 0x00		;read head 0
 	mov ch, 0x00		;read cylinder 0
 	mov cl, 0x02		;start from sector 2. no not sector 1. Sectors arn't counted from 0 for some godforsaken reason.
