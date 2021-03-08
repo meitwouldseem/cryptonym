@@ -1,4 +1,5 @@
 *.flp
 *.bin
 *.o
+*.ao
 *.swp

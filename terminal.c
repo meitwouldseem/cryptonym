@@ -9,9 +9,14 @@ size_t cursor;
 uint16_t* screen_buffer;
 
 //I don't like this function. It should be more readable
-static void term_newline()
+static void term_newline(uint8_t colour)
 {
 	cursor = ((cursor / DISP_WIDTH) * DISP_WIDTH) + DISP_WIDTH;
+	if (cursor > DISP_WIDTH * DISP_HEIGHT)
+	{
+		cursor = 0;
+		term_clear(colour);
+	}
 }
 
 void term_setup()
@@ -35,7 +40,7 @@ void term_putc(const char c, uint8_t colour)
 	switch (c)
 	{
 	case '\n':
-		term_newline();
+		term_newline(colour);
 		break;
 	default:
 		screen_buffer[cursor] = vga_character(c, colour);
