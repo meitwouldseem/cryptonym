@@ -2,7 +2,7 @@ export PATH:=$(HOME)/opt/cross/bin/:$(PATH)
 
 ASM_SRCS := $(wildcard *.asm)
 C_SRCS := $(wildcard *.c)
-ASM_OBJS := $(patsubst %.asm, %.o, $(ASM_SRCS))
+ASM_OBJS := $(patsubst %.asm, %.ao, $(ASM_SRCS))
 C_OBJS := $(patsubst %.c, %.o, $(C_SRCS))
 
 QEMU=qemu-system-i386
@@ -24,12 +24,12 @@ bootloader.o: $(C_OBJS) $(ASM_OBJS)
 	$(CC) -T linker.ld -o bootloader.o $(LINKFLAGS) $(C_OBJS) $(ASM_OBJS)
 
 clean:
-	rm -f $(wildcard *.o) $(wildcard *.flp)
+	rm -f $(wildcard *.o) $(wildcard *.flp) $(wildcard *.ao)
 
 %.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-%.o: %.asm
+%.ao: %.asm
 	$(ASM) $< $(ASMFLAGS) -o $@
 
 run:

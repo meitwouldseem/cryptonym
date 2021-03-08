@@ -17,7 +17,8 @@ global flush_code_seg
 global flush_data_seg
 
 global test_int
-global halt_sys
+global div_zero
+global halt_system
 
 set_gdt:
 	;push ebp
@@ -82,6 +83,12 @@ test_int:
 	int 0
 	ret
 
-halt_sys:
+div_zero:
+	xor eax, eax
+	div ax
+	ret
+
+halt_system:
 	cli
 	hlt
+	ret
