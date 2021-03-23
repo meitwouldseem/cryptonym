@@ -45,7 +45,7 @@ void install_gdt_simple_flat()
 	gdt[2] = make_gdt_entry(0x00000000, 0xffff, 0x92, 0xcf);//data seg
 	int data_seg = sizeof(gdt[0]) * 2;
 
-	set_gdt(gdt, sizeof(gdt));
+	set_gdt((uint32_t)gdt, sizeof(gdt));
 
 	flush_code_seg(code_seg);
 	flush_data_seg(data_seg);

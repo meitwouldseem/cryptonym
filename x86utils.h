@@ -30,4 +30,9 @@ static inline uint8_t inb(uint16_t port)
 	return value;
 }
 
+static inline void hlt()
+{
+	asm volatile ("hlt");
+}
+
 #endif

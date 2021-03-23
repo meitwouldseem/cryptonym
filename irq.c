@@ -1,5 +1,5 @@
 #include "x86utils.h"
-#include "terminal.h"
+#include "keyboard.h"
 
 void irq0_handler()
 {
@@ -8,9 +8,7 @@ void irq0_handler()
 }
 void irq1_handler()
 {
-	int code = inb(0x60);//must read scan code
-	term_print("\nKeyboard input received!\n", default_colour);
-	term_print_hex(code, default_colour);
+	process_scan_code();
 	outb(0x20, 0x20);
 	return;
 }

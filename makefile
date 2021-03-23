@@ -9,7 +9,7 @@ QEMU=qemu-system-i386
 ASM=nasm
 CC=i686-elf-gcc
 LD=i686-elf-ld
-CFLAGS=-std=gnu99 -ffreestanding -O2 -Wall -Wextra
+CFLAGS=-std=gnu99 -ffreestanding -O2 -Wall -Wextra -g
 LINKFLAGS=-ffreestanding -O2 -nostdlib -lgcc
 ASMFLAGS=-f elf -F dwarf -g
 

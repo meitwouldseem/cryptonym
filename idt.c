@@ -29,8 +29,6 @@ struct idt_entry make_idt_entry(uint32_t offset, uint16_t selector, uint8_t type
 	return entry;
 }
 
-int size;
-
 void install_idt()
 {
 	//0x8e - interupt gate
@@ -74,8 +72,6 @@ void install_idt()
 	idt[45] = make_idt_entry((uint32_t)&irq13, kg_code_seg, 0x8e);
 	idt[46] = make_idt_entry((uint32_t)&irq14, kg_code_seg, 0x8e);
 	idt[47] = make_idt_entry((uint32_t)&irq15, kg_code_seg, 0x8e);
-	
-	size = sizeof(idt);
 
-	set_idt(idt, size);
+	set_idt((uint32_t)idt, sizeof(idt));
 }

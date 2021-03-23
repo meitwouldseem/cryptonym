@@ -5,6 +5,7 @@
 #include "idt.h"
 #include "pic.h"
 #include "terminal.h"
+#include "keyboard.h"
 
 #include "x86utils.h"
 
@@ -54,6 +55,10 @@ extern void kernel_main(void)
 	remap_pic(0x20, 0x28);
 	//disable_pic();
 
+	term_putc(' ', default_colour);
+
+	term_putc(getc(), default_colour);
+	
 loop:
 goto loop;
 	return;
