@@ -50,14 +50,14 @@ extern void kernel_main(void)
 
 	//div_zero();
 
-	//halt_system();
-
 	remap_pic(0x20, 0x28);
 	//disable_pic();
 
 	term_putc(' ', default_colour);
 
 	term_putc(getc(), default_colour);
+
+	halt_system();
 	
 loop:
 goto loop;

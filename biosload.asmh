@@ -32,9 +32,9 @@ BOOT_DISC:
 	db 0
 
 readerror:
-	push errormsg
-	call biosprint
+	;push errormsg
+	;call biosprint
 	jmp $
 
-errormsg:
-	db "Could not read disc",0
+;errormsg:
+	;db "Could not read disc",0
