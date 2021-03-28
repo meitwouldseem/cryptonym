@@ -5,8 +5,6 @@
 
 #define KB_DATA 0x60
 
-#define BUFFER_SIZE 32
-
 char buffer;
 
 bool waiting = false;

@@ -34,14 +34,18 @@ void remap_pic(uint8_t masteroffset, uint8_t slaveoffset)
 	The others will be sent to the data port.
 	*/
 	outb(MASTER_CMD, ICW1_ICW4 | ICW1_INIT);
+	io_wait();
 	outb(SLAVE_CMD,  ICW1_ICW4 | ICW1_INIT);
+	io_wait();
 
 	/*
 	step 2.
 	Send the interupt vector offsets for both pics
 	*/
 	outb(MASTER_DATA, masteroffset);
+	io_wait();
 	outb(SLAVE_DATA, slaveoffset);
+	io_wait();
 
 	/*
 	step 3.
@@ -49,7 +53,9 @@ void remap_pic(uint8_t masteroffset, uint8_t slaveoffset)
 	Tell slave that it connects to master on IRQ2.
 	*/
 	outb(MASTER_DATA, 4);
+	io_wait();
 	outb(SLAVE_DATA, 2);
+	io_wait();
 
 	/*
 	step 4.
@@ -57,7 +63,9 @@ void remap_pic(uint8_t masteroffset, uint8_t slaveoffset)
 	This is the 4th and final control word
 	*/
 	outb(MASTER_DATA, ICW4_8086);
+	io_wait();
 	outb(SLAVE_DATA, ICW4_8086);
+	io_wait();
 
 	/*
 	step 5.
@@ -66,7 +74,9 @@ void remap_pic(uint8_t masteroffset, uint8_t slaveoffset)
 	0xFF= all irqs masked
 	*/
 	outb(MASTER_DATA, 0x0);
+	io_wait();
 	outb(SLAVE_DATA, 0x0);
+	io_wait();
 }
 
 void disable_pic()

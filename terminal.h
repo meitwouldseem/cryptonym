@@ -1,6 +1,8 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
 
+#include <stdint.h>
+
 enum vga_colour_val {
 	VGA_BLACK=0,
 	VGA_BLUE=1,
@@ -36,6 +38,9 @@ static inline uint16_t vga_character(unsigned char c, uint8_t colour)
 	return (uint16_t) c | (uint16_t) colour << 8;
 }
 
-#define default_colour 0x0F
+#define default_colour 0x0f
+#define success_colour 0x02
+#define highlight_colour 0x0e
+#define warn_colour 0x4f
 
 #endif

@@ -30,6 +30,13 @@ static inline uint8_t inb(uint16_t port)
 	return value;
 }
 
+static inline void io_wait()
+{
+	asm volatile ( "jmp 1f\n\t"
+	               "1:jmp 2f\n\t"
+		       "2:" );
+}
+
 static inline void hlt()
 {
 	asm volatile ("hlt");

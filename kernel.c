@@ -6,22 +6,13 @@
 #include "pic.h"
 #include "terminal.h"
 #include "keyboard.h"
+#include "shell.h"
 
 #include "x86utils.h"
-
-uint8_t success_colour;
-//uint8_t default_colour;
-uint8_t highlight_colour;
-uint8_t warn_colour;
 
 extern void kernel_main(void)
 {
 	term_setup();
-
-	success_colour = vga_colour(VGA_GREEN, VGA_BLACK);
-	//default_colour = vga_colour(VGA_WHITE, VGA_BLACK);
-	highlight_colour = vga_colour(VGA_YELLOW, VGA_BLACK);
-	warn_colour = vga_colour(VGA_WHITE, VGA_RED);
 
 	term_clear(default_colour);
 
@@ -53,9 +44,14 @@ extern void kernel_main(void)
 	remap_pic(0x20, 0x28);
 	//disable_pic();
 
-	term_putc(' ', default_colour);
+	term_print("\nInitialization done! Press any key to start the shell...", default_colour);
 
-	term_putc(getc(), default_colour);
+	getc();
+
+	//while(1)
+	//	term_putc(getc(), default_colour);
+
+	main();
 
 	halt_system();
 	

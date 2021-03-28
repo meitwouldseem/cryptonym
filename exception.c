@@ -1,84 +1,86 @@
+#include "panic.h"
+
 void EX0_handler()
 {
-	return;
+	panic("Tried to divide by zero");
 }
 void EX1_handler()
 {
-	return;
+	panic("debug");
 }
 void EX2_handler()
 {
-	return;
+	panic("non-maskable interupt");
 }
 void EX3_handler()
 {
-	return;
+	panic("breakpoint");
 }
 void EX4_handler()
 {
-	return;
+	panic("overflow");
 }
 void EX5_handler()
 {
-	return;
+	panic("bound range exceeded");
 }
 void EX6_handler()
 {
-	return;
+	panic("invalid opcode");
 }
 void EX7_handler()
 {
-	return;
+	panic("device not available");
 }
 void EX8_handler()
 {
-	return;
+	panic("double fault");
 }
 void EX9_handler()
 {
-	return;
+	panic("coprocessor overrun");
 }
 void EX10_handler()
 {
-	return;
+	panic("invalid TSS");
 }
 void EX11_handler()
 {
-	return;
+	panic("segment not present");
 }
 void EX12_handler()
 {
-	return;
+	panic("stack segment fault");
 }
 void EX13_handler()
 {
-	return;
+	panic("General protection fault");
 }
 void EX14_handler()
 {
-	return;
+	panic("page fault");
 }
 void EX16_handler()
 {
-	return;
+	panic("x87 floating point exception");
 }
 void EX17_handler()
 {
-	return;
+	panic("alignment check");
 }
 void EX18_handler()
 {
-	return;
+	panic("machine check");
 }
 void EX19_handler()
 {
-	return;
+	panic("SIMD floating point exception");
 }
 void EX20_handler()
 {
-	return;
+	panic("virtualization exception");
 }
 void EX30_handler()
 {
-	return;
+	panic("security exception");
 }
