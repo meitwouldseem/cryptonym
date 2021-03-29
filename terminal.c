@@ -42,6 +42,10 @@ void term_putc(const char c, uint8_t colour)
 	case '\n':
 		term_newline(colour);
 		break;
+	case '\b':
+		cursor--;
+		screen_buffer[cursor] = 0x0000;
+		break;
 	default:
 		screen_buffer[cursor] = vga_character(c, colour);
 		cursor++;

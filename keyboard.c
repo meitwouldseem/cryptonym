@@ -12,7 +12,7 @@ bool waiting = false;
 //scan code set 1. GB layout
 const char SC1_GB[256] = {
 	 0 ,  0 , '1', '2', '3', '4', '5', '6',
-	'7', '8', '9', '0', '-', '=',  0 ,  0 ,
+	'7', '8', '9', '0', '-', '=','\b',  0 ,
 	'q', 'w', 'e', 'r', 't', 'y', 'u', 'i',
 	'o', 'p', '[', ']','\n',  0 , 'a', 's',
 	'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',
@@ -20,6 +20,10 @@ const char SC1_GB[256] = {
 	'b', 'n', 'm', ',', '.', '/',  0 ,  0 ,
 	 0 , ' '
 };
+/*
+Some special characters:
+8 = backspace
+*/
 
 char getc()
 {

@@ -14,6 +14,10 @@ const char* splash =
 "   \\:\\__\\\n"
 "    \\/__/\n";
 
+#define INPSIZE 50
+
+char inpbuf[INPSIZE];
+
 static void zero_buffer(char* buffer, int size)
 {
 	for (int i=0; i<=size; i++)
@@ -28,17 +32,28 @@ void main()
 
 	while (1)
 	{
-		char inpbuf[50];
 		char* inpbufptr = inpbuf;
 
+		zero_buffer(inpbuf, sizeof(inpbuf));//We can get some garbage data on real machines if we don't clear the buffer
 		term_print("|:> ", highlight_colour);
 
 		while (1)
 		{
 			char c = getc();
 			
-			if (c == '\n')
+			if (c == '\n')//enter
 				break;
+			else if (c == '\b')//backspace
+			{
+				if (inpbufptr == inpbuf) continue;
+
+				inpbufptr--;
+				*inpbufptr = 0;
+				term_putc(c, default_colour);
+				continue;
+			}
+
+			if (inpbufptr == (inpbuf+INPSIZE)) continue;
 
 			*inpbufptr = c;
 			inpbufptr++;
@@ -49,7 +64,5 @@ void main()
 		term_putc('\n', default_colour);
 		term_print(inpbuf, default_colour);
 		term_putc('\n', default_colour);
-
-		zero_buffer(inpbuf, sizeof(inpbuf));
 	}
 }
