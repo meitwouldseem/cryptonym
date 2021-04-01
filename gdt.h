@@ -1,6 +1,6 @@
 #ifndef GDT_H
 #define GDT_H
 
-void install_gdt_simple_flat();
+void install_gdt();
 
 #endif

@@ -23,15 +23,15 @@ extern void kernel_main(void)
 
 	term_print("\nInstalling GDT: ", default_colour);
 
-	install_gdt_simple_flat();
+	install_gdt();
 
 	term_print("Done!", success_colour);
 
 	term_print("\ncode seg: ", default_colour);
-	term_print_hex(kg_code_seg, highlight_colour);
+	term_print_hex(kg_ker_code_seg, highlight_colour);
 	
 	term_print("\ndata seg: ", default_colour);
-	term_print_hex(kg_data_seg, highlight_colour);
+	term_print_hex(kg_ker_data_seg, highlight_colour);
 
 	term_print("\nInstalling IDT: ", default_colour);
 
@@ -51,7 +51,7 @@ extern void kernel_main(void)
 	//while(1)
 	//	term_putc(getc(), default_colour);
 
-	main();
+	enter_usermode(&main);
 
 	halt_system();
 	

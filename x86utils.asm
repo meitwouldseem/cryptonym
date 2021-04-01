@@ -15,10 +15,12 @@ global set_gdt
 global set_idt
 global flush_code_seg
 global flush_data_seg
+global flush_tss
 
 global test_int
 global div_zero
 global halt_system
+global enter_usermode
 
 set_gdt:
 	;push ebp
@@ -34,6 +36,24 @@ set_gdt:
 
 	;pop ebp
 	ret
+
+enter_usermode:
+	mov ax, (4 * 8) | 3;user data seg with RPL 3
+	mov ds, ax
+	mov es, ax
+	mov fs, ax
+	mov gs, ax
+	;iret will set ss
+
+	;must setup the stack in the way iret expects it
+	mov eax, esp
+	push (4 * 8) | 3
+	push eax
+	pushf
+	push (3 * 8) | 3
+	mov eax, [esp + 20];get target address
+	push eax
+	iret
 
 flush_code_seg:
 	;push ebp
@@ -65,6 +85,14 @@ flush_data_seg:
 	mov ss, ax
 	;pop ebp
 	ret
+
+flush_tss:
+	mov ax, (5*8) | 3
+	ltr ax
+	ret
+	;This is hardcoded to use entry 6 as the tss with a requested
+	;privilege level of 3. This is ok to hardcode as the gdt
+	;layout will never change.
 
 set_idt:
 	mov eax, [esp + 4];idt offset

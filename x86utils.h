@@ -7,11 +7,15 @@ void set_gdt(uint32_t gdt, uint16_t size);
 
 void set_idt(uint32_t idt, uint16_t size);
 
+void enter_usermode(uint32_t addr);
+
 void flush_code_seg(uint16_t selector);
 
 void flush_data_seg(uint16_t selector);
 
 void test_int();
+
+void flush_tss();
 
 void div_zero();
 

@@ -1,5 +1,6 @@
 #include "terminal.h"
 #include "keyboard.h"
+#include "x86utils.h"
 
 const char* splash =
 "     ___\n"
