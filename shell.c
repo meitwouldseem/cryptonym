@@ -1,5 +1,5 @@
 #include "terminal.h"
-#include "keyboard.h"
+#include "userlib.h"
 #include "x86utils.h"
 
 const char* splash =

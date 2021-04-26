@@ -53,7 +53,8 @@ void install_gdt()
 	kg_usr_data_seg = sizeof(gdt[0]) * 4;
 
 	//here 0x3000 is the value given to esp when entering ring 0. This
-	//is just a best guess value for now but it can be changed later.
+	//value dosen't matter for us as SYSENTER sets esp from an MSR.
+	//This might be an issue later though for task switching.
 	uint32_t tss = make_tss(kg_ker_data_seg, 0x3000);
 	//tss is always 104 bytes large. limit must be 0x68
 	gdt[5] = make_gdt_entry(tss, 0x0006, 0xe9, 0x08);

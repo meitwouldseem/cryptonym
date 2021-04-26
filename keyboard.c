@@ -25,7 +25,7 @@ Some special characters:
 8 = backspace
 */
 
-char getc()
+char k_getc()
 {
 	waiting = true;
 

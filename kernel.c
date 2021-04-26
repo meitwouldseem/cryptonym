@@ -7,7 +7,7 @@
 #include "terminal.h"
 #include "keyboard.h"
 #include "shell.h"
-
+#include "syscall.h"
 #include "x86utils.h"
 
 extern void kernel_main(void)
@@ -44,9 +44,11 @@ extern void kernel_main(void)
 	remap_pic(0x20, 0x28);
 	//disable_pic();
 
+	prep_sysenter(0x3000, syscall_wrapper);
+
 	term_print("\nInitialization done! Press any key to start the shell...", default_colour);
 
-	getc();
+	k_getc();
 
 	//while(1)
 	//	term_putc(getc(), default_colour);

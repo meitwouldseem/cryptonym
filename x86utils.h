@@ -46,4 +46,16 @@ static inline void hlt()
 	asm volatile ("hlt");
 }
 
+static inline void wrmsr(uint32_t id, uint64_t value)
+{
+	asm volatile ( "wrmsr" : : "c" (id), "A" (value) );
+}
+
+static inline uint64_t rdmsr(uint32_t id)
+{
+	uint64_t value;
+	asm volatile ( "rdmsr" : "=A" (value) : "c" (id) );
+	return value;
+}
+
 #endif
