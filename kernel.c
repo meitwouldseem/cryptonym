@@ -44,7 +44,7 @@ extern void kernel_main(void)
 	remap_pic(0x20, 0x28);
 	//disable_pic();
 
-	prep_sysenter(0x3000, syscall_wrapper);
+	prep_sysenter(0x3000, (uint32_t) syscall_wrapper);
 
 	term_print("\nInitialization done! Press any key to start the shell...", default_colour);
 
@@ -53,7 +53,7 @@ extern void kernel_main(void)
 	//while(1)
 	//	term_putc(getc(), default_colour);
 
-	enter_usermode(&main);
+	enter_usermode((uint32_t) main);
 
 	halt_system();
 	

@@ -1,6 +1,7 @@
 #include "terminal.h"
 #include "userlib.h"
 #include "x86utils.h"
+#include "cpuid.h"
 
 const char* splash =
 "     ___\n"
@@ -18,6 +19,26 @@ const char* splash =
 #define INPSIZE 50
 
 char inpbuf[INPSIZE];
+
+//This isn't the right place to put a strcmp implementation
+//however implementing a 'propper' lib for this would be
+//a big task that must wait until another day
+int strcmp(const char *a, const char *b)
+{
+	while (1)
+	{
+		if (*a == *b)
+		{
+			if (*a == 0) {return 1;}
+		}
+		else
+		{
+			return 0;
+		}
+		a++;
+		b++;
+	}
+}
 
 static void zero_buffer(char* buffer, int size)
 {
@@ -62,8 +83,13 @@ void main()
 			term_putc(c, default_colour);
 		}
 
+
 		term_putc('\n', default_colour);
-		term_print(inpbuf, default_colour);
-		term_putc('\n', default_colour);
+		//term_print(inpbuf, default_colour);
+
+		if (strcmp(inpbuf, "vendor"))
+		{
+			term_print(get_vendor(), highlight_colour);
+		}
 	}
 }
