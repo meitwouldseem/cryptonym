@@ -91,5 +91,9 @@ void main()
 		{
 			term_print(get_vendor(), highlight_colour);
 		}
+		else if (strcmp(inpbuf, "exit"))
+		{
+			outw(0x604, 0x2000);//This does nothing on real hardware but can ve used to shutdown on QEMU
+		}
 	}
 }
