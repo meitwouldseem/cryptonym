@@ -94,6 +94,19 @@ void main()
 		else if (strcmp(inpbuf, "exit"))
 		{
 			outw(0x604, 0x2000);//This does nothing on real hardware but can ve used to shutdown on QEMU
+			term_print("This exit method is only supported in an emulated enviroment", default_colour);
+		}
+		else if (strcmp(inpbuf, "clear"))
+		{
+			term_clear(default_colour);
+		}
+		else if (strcmp(inpbuf, "panic"))
+		{
+			div_zero();
+		}
+		else
+		{
+			term_print("Invalid command\n", default_colour);
 		}
 	}
 }
